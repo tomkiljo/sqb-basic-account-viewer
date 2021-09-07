@@ -1,6 +1,6 @@
-# Stellar Quest Bounties - Simple Account Viewer
+# Stellar Quest Bounties - Basic Account Viewer
 
-Simple Account Viewer created for [Stellar Quest Bounties](https://github.com/tyvdh/stellar-quest-bounties/). Enables connecting a web-wallet to the website and viewing basic account information.
+Basic Account Viewer created for [Stellar Quest Bounties](https://github.com/tyvdh/stellar-quest-bounties/). Enables connecting a web-wallet to the website and viewing basic account information.
 
 Currently supported web wallets:
 
