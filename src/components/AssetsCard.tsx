@@ -42,16 +42,10 @@ const shortId = (accountId?: string) => {
 const AssetsCard: FC<AssetsCardProps> = ({ account, network }) => {
   const classes = useStyles();
 
-  const laboratoryUrl = (assetCode: string, assetIssuer?: string) => {
-    const values = encodeURIComponent(
-      Buffer.from(
-        JSON.stringify({
-          asset_code: assetCode,
-          asset_issuer: assetIssuer,
-        })
-      ).toString("base64")
-    );
-    return `https://laboratory.stellar.org/#explorer?resource=assets&endpoint=single&values=${values}&network=${network.name}`;
+  const externalUrl = (assetCode: string, assetIssuer?: string) => {
+    return `https://stellar.expert/explorer/${network.name}/asset/${assetCode}${
+      assetIssuer ? `-${assetIssuer}` : ""
+    }`;
   };
 
   return !account.isError ? (
@@ -74,20 +68,18 @@ const AssetsCard: FC<AssetsCardProps> = ({ account, network }) => {
                 primary={`${asset.balance} ${asset.assetCode}`}
                 secondary={shortId(asset.assetIssuer)}
               />
-              {asset.assetIssuer && (
-                <ListItemSecondaryAction>
-                  <Tooltip title="Show in Stellar Laboratory">
-                    <IconButton
-                      edge="end"
-                      href={laboratoryUrl(asset.assetCode, asset.assetIssuer)}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <OpenInNewIcon />
-                    </IconButton>
-                  </Tooltip>
-                </ListItemSecondaryAction>
-              )}
+              <ListItemSecondaryAction>
+                <Tooltip title="Show in Stellar Expert">
+                  <IconButton
+                    edge="end"
+                    href={externalUrl(asset.assetCode, asset.assetIssuer)}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <OpenInNewIcon />
+                  </IconButton>
+                </Tooltip>
+              </ListItemSecondaryAction>
             </ListItem>
           ))}
         </List>

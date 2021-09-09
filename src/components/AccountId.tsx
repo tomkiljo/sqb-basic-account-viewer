@@ -22,14 +22,7 @@ const useStyles = makeStyles((theme) => ({
 const AccountId: FC<AccountIdProps> = ({ accountId, network }) => {
   const classes = useStyles();
   const shortId = `${accountId.slice(0, 4)}...${accountId.slice(-4)}`;
-  const values = encodeURIComponent(
-    Buffer.from(
-      JSON.stringify({
-        account_id: accountId,
-      })
-    ).toString("base64")
-  );
-  const laboratoryUrl = `https://laboratory.stellar.org/#explorer?resource=accounts&endpoint=single&values=${values}&network=${network.name}`;
+  const externalUrl = `https://stellar.expert/explorer/${network.name}/account/${accountId}`;
 
   return (
     <Typography className={classes.root}>
@@ -43,9 +36,9 @@ const AccountId: FC<AccountIdProps> = ({ accountId, network }) => {
           <FileCopyIcon fontSize="small" />
         </IconButton>
       </Tooltip>
-      <Tooltip title="Show in Stellar Laboratory">
+      <Tooltip title="Show in Stellar Expert">
         <IconButton
-          href={laboratoryUrl}
+          href={externalUrl}
           target="_blank"
           rel="noreferrer"
           color="primary"

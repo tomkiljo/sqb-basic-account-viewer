@@ -1,14 +1,14 @@
 import { Networks } from "stellar-base";
 
 export interface Network {
-  name: "test" | "public";
+  name: "testnet" | "public";
   passphrase: string;
   serverUrl: string;
 }
 
 export const networks: Network[] = [
   {
-    name: "test",
+    name: "testnet",
     passphrase: Networks.TESTNET,
     serverUrl: "https://horizon-testnet.stellar.org",
   },

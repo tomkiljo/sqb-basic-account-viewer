@@ -6,7 +6,7 @@ Currently supported web wallets:
 
 - [Albedo](https://albedo.link/)
 - [Freighter](https://www.freighter.app/)
-- [Albedo](https://rabet.io/)
+- [Rabet](https://rabet.io/)
 
 ## Getting started
 
