@@ -24,13 +24,6 @@ export const fetchAccount: (
 ) => Promise<AccountDetails> = async (server, keypair) => {
   try {
     const account = await server.loadAccount(keypair.publicKey());
-    const operations = await server
-      .operations()
-      .forAccount(account.accountId())
-      .order("asc")
-      .limit(5)
-      .includeFailed(false)
-      .call();
 
     const balances = account.balances.map((asset) => {
       if (asset.asset_type === "native") {
@@ -47,7 +40,18 @@ export const fetchAccount: (
       }
     });
 
-    const createRecord = operations.records.find(
+    const operations =
+      (await server
+        .transactions()
+        .forAccount(account.accountId())
+        .order("asc")
+        .limit(1)
+        .call()
+        .then(({ records }) => records.pop())
+        .then((record) => record?.operations())
+        .then((operations) => operations?.records)
+        .catch(console.error)) || [];
+    const createRecord = operations.find(
       (rec) => rec.type === "create_account"
     );
     const createdAt = createRecord ? createRecord.created_at : "-";
