@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 const AccountId: FC<AccountIdProps> = ({ accountId, network }) => {
   const classes = useStyles();
-  const shortId = `${accountId.slice(0, 4)}...${accountId.slice(-4)}`;
+  const shortId = `${accountId.slice(0, 7)}...${accountId.slice(-7)}`;
   const externalUrl = `https://stellar.expert/explorer/${network.name}/account/${accountId}`;
 
   return (
