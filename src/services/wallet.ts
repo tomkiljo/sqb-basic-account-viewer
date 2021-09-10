@@ -16,7 +16,8 @@ export type ConnectResult =
 
 export interface Wallet {
   name(): string;
-  logoUrl(): string | undefined;
+  logoUrl(): string;
+  installUrl(): string;
   isAvailable(): boolean;
   connect(): Promise<ConnectResult>;
 }
@@ -28,6 +29,10 @@ export class AlbedoWallet implements Wallet {
 
   logoUrl(): string {
     return "/images/albedo.png";
+  }
+
+  installUrl(): string {
+    return "";
   }
 
   isAvailable(): boolean {
@@ -62,6 +67,10 @@ export class RabetWallet implements Wallet {
     return "/images/rabet.png";
   }
 
+  installUrl(): string {
+    return "https://rabet.io/";
+  }
+
   isAvailable(): boolean {
     const rabet = (window as any).rabet;
     return !!rabet && !!rabet.connect;
@@ -93,6 +102,10 @@ export class FreighterWallet implements Wallet {
 
   logoUrl(): string {
     return "/images/freighter.png";
+  }
+
+  installUrl(): string {
+    return "https://freighter.app/";
   }
 
   isAvailable(): boolean {

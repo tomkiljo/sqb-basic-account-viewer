@@ -1,13 +1,16 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import {
   Grid,
   IconButton,
+  Link,
   makeStyles,
   Modal,
   Paper,
+  Theme,
   Tooltip,
   Typography,
 } from "@material-ui/core";
+import { withStyles } from "@material-ui/styles";
 import {
   AlbedoWallet,
   FreighterWallet,
@@ -64,6 +67,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const WalletTooltip = withStyles((theme: Theme) => ({
+  tooltip: {
+    backgroundColor: theme.palette.background.default,
+    color: theme.palette.text.primary,
+    boxShadow: theme.shadows[1],
+  },
+}))(Tooltip);
+
 const wallets: Wallet[] = [
   new AlbedoWallet(),
   new RabetWallet(),
@@ -96,30 +107,53 @@ const WalletModal: FC<WalletModalProps> = ({ open, setOpen, setKeypair }) => {
           </IconButton>
         </Typography>
         <Grid container className={classes.wallets} spacing={2}>
-          {wallets
-            .filter((wallet) => wallet.isAvailable())
-            .map((wallet, index) => (
-              <Grid
-                item
-                className={classes.wallet}
-                key={`wallet_${index}`}
-                xs={6}
+          {wallets.map((wallet, index) => (
+            <Grid
+              item
+              className={classes.wallet}
+              key={`wallet_${index}`}
+              xs={6}
+            >
+              <WalletTooltip
+                interactive={!wallet.isAvailable()}
+                leaveDelay={100}
+                title={
+                  <Fragment>
+                    <Typography variant="body2">
+                      <strong>{`Connect with ${wallet.name()}`}</strong>
+                    </Typography>
+                    {!wallet.isAvailable() && (
+                      <Typography variant="body2">
+                        {`${wallet.name()} extension is not installed`}
+                        <br />
+                        Get it from{" "}
+                        <Link
+                          href={wallet.installUrl()}
+                          target="_blank"
+                          rel="noreffer"
+                        >
+                          {wallet.installUrl()}
+                        </Link>
+                      </Typography>
+                    )}
+                  </Fragment>
+                }
               >
-                <Tooltip title={`Connect with ${wallet.name()}`}>
-                  <button
-                    className={classes.walletButton}
-                    onClick={() => connect(wallet)}
-                  >
-                    <img
-                      className={classes.walletIcon}
-                      src={wallet.logoUrl()}
-                      alt={wallet.name()}
-                    />
-                    <Typography variant="body2">{wallet.name()}</Typography>
-                  </button>
-                </Tooltip>
-              </Grid>
-            ))}
+                <button
+                  className={classes.walletButton}
+                  disabled={!wallet.isAvailable()}
+                  onClick={() => connect(wallet)}
+                >
+                  <img
+                    className={classes.walletIcon}
+                    src={wallet.logoUrl()}
+                    alt={wallet.name()}
+                  />
+                  <Typography variant="body2">{wallet.name()}</Typography>
+                </button>
+              </WalletTooltip>
+            </Grid>
+          ))}
         </Grid>
       </Paper>
     </Modal>
