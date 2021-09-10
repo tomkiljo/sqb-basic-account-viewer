@@ -8,7 +8,7 @@ Currently supported web wallets:
 - [Freighter](https://www.freighter.app/)
 - [Rabet](https://rabet.io/)
 
-Note that Freighter and Rabet require a browser plugin to work and are not shown in the wallet selection if they are not enabled.
+Note that Freighter and Rabet require a browser plugin to work.
 
 ## Getting started
 
